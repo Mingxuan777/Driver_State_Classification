@@ -81,6 +81,51 @@ def set_seed(args):
     if args.n_gpu > 0:
         torch.cuda.manual_seed_all(args.seed)
 
+def train(args, model):
+    """ Train the model """
+    # Prepare dataset
+    train_loader, test_loader = get_loader(args)
+    os.makedirs(args.output_dir, exist_ok=True)
+    writer = SummaryWriter(log_dir=os.path.join("logs", args.name))
+
+    # Prepare optimizer and scheduler
+    optimizer = torch.optim.SGD(model.parameters(),
+                                lr=args.learning_rate,
+                                momentum=0.9)
+    # Train!
+    logger.info("***** Running training *****")
+    logger.info("  Total optimization steps = %d", args.epochs)
+    logger.info("  Instantaneous batch size per GPU = %d", args.train_batch_size)
+    logger.info("  Gradient Accumulation steps = %d", args.gradient_accumulation_steps)
+
+    model.zero_grad()
+    set_seed(args)  # Added here for reproducibility (even between python 2 and 3)
+    epochs = args.epochs
+    loss_function = nn.MSELoss()
+    for epoch in range(epochs):
+        model.train()
+        epoch_iterator = tqdm(train_loader,
+                              desc="Training (X / X Steps) (loss=X.X)",
+                              bar_format="{l_bar}{r_bar}",
+                              dynamic_ncols=True)
+        for step, batch in enumerate(epoch_iterator):
+            batch = tuple(t.to(args.device) for t in batch)
+            x, y = batch # x and y is train data and label
+            out = model(x) # shape of X : (30, 3, 224, 224)
+            y = F.one_hot(y, num_classes = 10) # covert labels to one-hot encoding
+
+            loss = loss_function(out,y.float()) # calculate MSE loss
+            # loss = loss.to(torch.float32)
+            loss.backward()
+            optimizer.step()
+
+            writer.add_scalar("train/loss", scalar_value=loss, global_step = epoch)
+        print("epoch error: " + loss)
+
+    save_model(args,model)
+    writer.close()
+    logger.info("End Training!")
+
 def main():
     args = setups()
 
@@ -94,8 +139,9 @@ def main():
     # Model & Tokenizer Setup
     args, model = setup(args)
     # Training
-    
-    # Valid
+    train(args, model)
+    #Valid
+    # direct_valid(args, model)
 
 if __name__ == "__main__":
     main()
