@@ -101,7 +101,7 @@ def train(args, model):
     model.zero_grad()
     set_seed(args)  # Added here for reproducibility (even between python 2 and 3)
     epochs = args.epochs
-    loss_function = nn.MSELoss()
+    loss_function = nn.CrossEntropyLoss()
     for epoch in range(epochs):
         model.train()
         epoch_iterator = tqdm(train_loader,
@@ -119,7 +119,7 @@ def train(args, model):
             loss.backward()
             optimizer.step()
 
-            writer.add_scalar("train/loss", scalar_value=loss, global_step = epoch)
+            writer.add_scalar("train_loss", scalar_value=loss, global_step = epoch)
         print("epoch error: " + loss)
 
     save_model(args,model)
@@ -140,7 +140,7 @@ def main():
     args, model = setup(args)
     # Training
     train(args, model)
-    #Valid
+    # Valid
     # direct_valid(args, model)
 
 if __name__ == "__main__":
