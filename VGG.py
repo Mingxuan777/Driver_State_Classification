@@ -8,6 +8,7 @@ import torch.nn as nn
 class VGG16(nn.Module):
     def __init__(self,args):
         super().__init__()
+        # convolutional layers initiation
         self.conv1 = nn.Conv2d(3,64,3)
         self.conv2 = nn.Conv2d(64,64,3)
 
@@ -28,14 +29,12 @@ class VGG16(nn.Module):
 
         self.batch_size = args.train_batch_size
 
-        self._to_linear = None
-
-        x = torch.randn(3,50,50).view(-1,3,50,50)
-        # self.convs(x)
+        # fully conntected layers initiation
         self.fc1 = nn.Linear(8192, 4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, 10)
 
+    # convolution process
     def convs(self,x):
         x = self.conv1(x)
         x = self.conv2(x)
@@ -63,23 +62,24 @@ class VGG16(nn.Module):
         return x
 
     def forward(self,x):
-        # convolution operation
+        # convolution operation (defined in convs function)
         x = self.convs(x)
         # flatten convoluted results to a vector for classification
         x = torch.flatten(x,1)
 
-        # fully connected layers for classification
+        # fully connected layers for classification (along with sigmoid activation function)
         x = F.sigmoid(self.fc1(x))
         x = F.sigmoid(self.fc2(x))
         x = F.sigmoid(self.fc3(x))
-        # output results
+        # output results using softmax activation function
         Output = F.softmax(x)
         return Output
 
-# VGG19 model
+# VGG19 model (which has more parameters and more convolution layers)
 class VGG19(nn.Module):
     def __init__(self,args):
         super().__init__()
+        # convolutional layers initiation
         self.conv1 = nn.Conv2d(3,64,3)
         self.conv2 = nn.Conv2d(64,64,3)
 
@@ -103,14 +103,12 @@ class VGG19(nn.Module):
 
         self.batch_size = args.train_batch_size
 
-        self._to_linear = None
-
-        x = torch.randn(3,50,50).view(-1,3,50,50)
-        self.convs(x)
+        # fully conntected layers initiation
         self.fc1 = nn.Linear(73728, 4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, 10)
 
+    # convolution process
     def convs(self,x):
         x = self.conv1(x)
         x = self.conv2(x)
@@ -141,11 +139,15 @@ class VGG19(nn.Module):
         return x
 
     def forward(self,x):
+        # convolution operation (defined in convs function)
         x = self.convs(x)
+        # flatten convoluted results to a vector for classification
         x = torch.flatten(x,1)
 
+        # fully connected layers for classification (along with sigmoid activation function)
         x = F.sigmoid(self.fc1(x))
         x = F.sigmoid(self.fc2(x))
         x = F.sigmoid(self.fc3(x))
+        # output results using softmax activation function
         Output = F.softmax(x)
         return Output
