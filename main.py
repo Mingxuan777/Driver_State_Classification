@@ -58,15 +58,15 @@ def setups():
     parser.add_argument("--output_dir", default="output", type=str, help="The output directory where checkpoints will be written.")
     # set up image size
     parser.add_argument("--img_size", default=224, type=int, help="Resolution size")
-    # set up epochs --- hyperparameters #1
+    # set up epochs --- hyperparameters # 1
     parser.add_argument("--epochs", default=50, type=float, help="Training epoch times")
-    # set up learning rate --- hyperparameters #2                    
+    # set up learning rate --- hyperparameters # 2                    
     parser.add_argument("--learning_rate", default=0.001, type=float, help="The initial learning rate for SGD.")
-    # set up batchsize (for training) --- hyperparameters #3
+    # set up batchsize (for training) --- hyperparameters # 3
     parser.add_argument("--train_batch_size", default=32, type=float, help="training batch size.")
-    # set up batchsize (for testing) --- hyperparameters #3
+    # set up batchsize (for testing) --- hyperparameters # 4
     parser.add_argument("--test_batch_size", default=32, type=float, help="test batch size.")
-    # set up seed for reproduci
+    # set up seed for reproducibility 
     parser.add_argument('--seed', type=int, default=42, help="random seed for initialization")
     # input data path (for training and validation)
     parser.add_argument('--train_data_path', type=str, default='../data1/imgs/train', help="training data path")
