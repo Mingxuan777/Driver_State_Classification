@@ -1,7 +1,10 @@
+# This file contains self-build deep neural network models.
+
 import torch
 import torch.nn.functional as F
 import torch.nn as nn
 
+# VGG 16 model
 class VGG16(nn.Module):
     def __init__(self,args):
         super().__init__()
@@ -60,15 +63,20 @@ class VGG16(nn.Module):
         return x
 
     def forward(self,x):
+        # convolution operation
         x = self.convs(x)
+        # flatten convoluted results to a vector for classification
         x = torch.flatten(x,1)
 
+        # fully connected layers for classification
         x = F.sigmoid(self.fc1(x))
         x = F.sigmoid(self.fc2(x))
         x = F.sigmoid(self.fc3(x))
+        # output results
         Output = F.softmax(x)
         return Output
 
+# VGG19 model
 class VGG19(nn.Module):
     def __init__(self,args):
         super().__init__()

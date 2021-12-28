@@ -4,17 +4,17 @@ from PIL import Image
 from torch.utils import data
 import os, random
 
-random.seed(1)
+random.seed(1) # make the code result reproducible 
 
 def get_filepath(dir_root):
     # get root path of the files and store them in list file_paths
-    file_paths = []
+    file_paths = [] # filepath list, which is used to store filepath string.
     for root, dirs, files in os.walk(dir_root):
         for file in files:
             file_paths.append(os.path.join(root, file))
     return file_paths
 
-class DriverDataset(data.Dataset):
+class LoadDataset(data.Dataset):
 
     def __init__(self, data_root, args, transforms=None, train=True):
         self.train = train
