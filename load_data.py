@@ -28,7 +28,7 @@ class LoadDataset(data.Dataset):
 
         # build transform using Compose method
         if transforms is None and self.train: # for training
-            self.transforms = T.Compose([T.RandomHorizontalFlip(), T.RandomResizedCrop(224),T.ToTensor()])
+            self.transforms = T.Compose([T.RandomHorizontalFlip(), T.RandomResizedCrop(224), T.ToTensor()])
         else: # for validation
             self.transforms = T.Compose([T.Resize(size=(224, 224)), T.ToTensor()])
 

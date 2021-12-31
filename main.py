@@ -13,7 +13,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-from VGG import VGG16 # import model from VGG.py
+from VGG import VGG16, VGG19 # import model from VGG.py
 import load_data
 
 import torchvision.models as models
@@ -53,6 +53,8 @@ def setups():
     parser = argparse.ArgumentParser()
     # Set parameters
     parser.add_argument("--name", default="VGG16", type=str, help="The output directory where logs will be written.")
+
+    parser.add_argument("--model", default="MobileNet", type=str, help="Select MobileNet or VGG16 or VGG19")
 
     # set up output directory 
     parser.add_argument("--output_dir", default="output", type=str, help="The output directory where checkpoints will be written.")
@@ -95,12 +97,16 @@ def setup(args):
     '''
     # Prepare model
     # model = VGG16(args) # enable this if you want VGG rather than mobilenet
-    
-    model = models.mobilenet_v2() # model to use
-    model.classifier = nn.Sequential(nn.Dropout(p=0.2, inplace=False),
-                                      nn.Linear(in_features=model.classifier[1].in_features, out_features=10, bias=True))
-    # As mobilenet in torchvision has 1000 classification sets, here an additional fully connected layers are added to make the final 
-    # classification sets to 10
+    if args.model == "MobileNet":
+        model = models.mobilenet_v2() # model to use
+        model.classifier = nn.Sequential(nn.Dropout(p=0.2, inplace=False),
+                                        nn.Linear(in_features=model.classifier[1].in_features, out_features=10, bias=True))
+        # As mobilenet in torchvision has 1000 classification sets, here an additional fully connected layers are added to make the final 
+        # classification sets to 10
+    elif args.model == "VGG16":
+        model = VGG16()
+    elif args.model == "VGG19":
+        model = VGG19()
 
     # detect GPU and send model to GPU
     if torch.cuda.is_available():
