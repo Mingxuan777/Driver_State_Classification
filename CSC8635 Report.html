@@ -13089,8 +13089,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Drivers' states while driving is important in keeping driving save. Drinking, Talking while driving are critical factors that will impact the safety while driving.</p>
-<p>To determine the final status of the driver. By comparing the effects of super-parameter adjustment on experimental results, this paper explores how to select the optimal parameter in deep learning.</p>
+<p>The state of drivers when driving is critical to making driving safe. Drinking and talking while driving are two major issues that have an impact on driving safety. As a result, creating a program that can automatically determine a driver's status is critical. The State Farm Distracted Driver Detection Dataset includes nine driver statuses: safe driving, texting, chatting on the phone, manipulating the radio, reaching behind the wheel, applying makeup, and conversing with a passenger.</p>
+<p>MobileNet, a deep neural network model, is utilized to identify photos in this research. This research also investigates how hyperparameters influence the training process and training accuracy by comparing the effects of hyperparameter change on experimental findings.</p>
 
 </div>
 </div>
@@ -13098,46 +13098,84 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Methods">Methods<a class="anchor-link" href="#Methods">&#182;</a></h1>
+<h1 id="Methods">Methods<a class="anchor-link" href="#Methods">&#182;</a></h1><h2 id="Deep-Leaning-method:-MobileNet">Deep Leaning method: MobileNet<a class="anchor-link" href="#Deep-Leaning-method:-MobileNet">&#182;</a></h2><p>To identify photos, a variety of deep learning approaches can be utilized. Lenet, VGG, and other convolutional neural network-based image categorization approaches are examples. In general, deep learning-based image classification technology uses a multi-layer convolution module to extract features from images, followed by a fully connected layer to turn the acquired features into a one-dimensional vector.After that, several fully connected layers are followed and eventually output the possibility of each classification label. The number of final classifications is equal to the number of neurons in the output layer.</p>
+<p>MobileNet[1] is a light-weight deep neural network model used in this research that uses depth-wise separable convolutions instead of typical convolutions. MobileNet's parameter number is substantially lower than that of and the network is also faster to train thanks to deep-wise separable convolutions. Accordingly, MobileNet is suitable to be deployed on mobile devices.</p>
+<p>A 3x3 convolutional layer, a batch normalization layer, and a ReLU activation layer make up a standard convolutional layer. The 3x3 convolutional layer is replaced by a 3x3 Depthwise convolutional layer in the depth-wise separable convolutional layer. Following that, there is a 1x1 convolutional layer with a batch normalization layer and a ReLU layer. The comparison between the two architectures is depicted in the diagram below.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Deep-Leaning-method:-MobileNet">Deep Leaning method: MobileNet<a class="anchor-link" href="#Deep-Leaning-method:-MobileNet">&#182;</a></h2><p>There are many deep learning methods that can be used to classify images. Classic convolutional neural network based image classification techniques include Lenet, VGG, etc. In general, image classification technology based on deep learning firstly uses multi-layer convolution module to extract features from images, and then uses fully connected layer to transform the learned features into a one-dimensional vector. And then categorize and predict. The number of neurons in the output layer is the number of final classifications.</p>
-<p>In this project, MobileNet[1] is a light weight deep neural network model that uses depth-wise separable convolutions rather than traditional convolutions. With deep-wise separable convolutions, MobileNet's parameter number is significantly less than that of , and the network is also faster to train. Accordingly, MobileNet is suitable to be deployed on mobile devices.</p>
-<p>Standard convolutional layer is composed of a 3x3 convolutional layer, a batch normalization layer and a ReLU activation layer. However, in depth-wise separable convolutional layer, the 3x3 convolutional layer is replaced by 3x3 Depthwise convolutional layer. And subsequently, a 1x1 convolutional layer with a batch normalization layer and a ReLU layer is followed. The following figure shows the comparison between the two structures.</p>
 <p><img src="pics/MobileNet_1.png" width="80%"></p>
-<p>MobileNet uses a combination of deep-wise convolutional layers and standard convolutional layers to perform image feature extraction task. As compared to Conv MobileNet (MobileNet that built with full convolutions), MobileNet with depth-wise separable convoutional layers has slightly poor performance (71.7% and 70.6% on ImageNet). But the latter has significantly smaller number of parameters (29.3 millions versus 4.2 millions).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>MobileNet performs picture feature extraction using a combination of deep-wise convolutional layers and normal convolutional layers. MobileNet with depth-wise separable convoutional layers performs somewhat worse than Conv MobileNet (MobileNet built with full convolutions) (71.7 percent and 70.6 percent on ImageNet). However, the latter has a far fewer number of parameters (29.3 millions versus 4.2 millions).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="pics/MobileNet_2.png" width="80%"></p>
-<h2 id="Experiment-Process">Experiment Process<a class="anchor-link" href="#Experiment-Process">&#182;</a></h2><p>There are three files in this project: <em>load_data.py</em>, <em>main.py</em>, <em>VGG.py</em>.  The first is used to read raw image data to tensor. Notably, when it comes to training data, <em>RandomHorizontalFlip</em> method is used to flip training images horizontally. <em>load_data.py</em> also seprates training data and validation data, using traindata_size and valdata_size to adjust. The design of <em>load_data.py</em> also uses special methods to make the code more efficient. <em>main.py</em> includes parameter setting function, training and validation program. Validation set is implemented immediately after training to obtain the performance of the current model parameters. After finishing each epoch, the model is saved as <em>model.pt</em>. <em>VGG.py</em> includes the VGG16 and the VGG19 neural network model that I built by myself. Unfortunately, this porject did not use this model due to its effeciency.</p>
-<h2 id="Parameters-comparision">Parameters comparision<a class="anchor-link" href="#Parameters-comparision">&#182;</a></h2><p>This section reports experiment result. There are six expirements in total.</p>
-<p>2.3.1 Standard Group</p>
-<p>This experiment group set epoch number as 50, learning rate as 0.0001, batch size as 16 and dataset parameters as 0.6 and 0.95. Following is the training process:</p>
-<p><img src="pics/SG_1.png" width="80%"></p>
-<p><img src="pics/SG_2.png" width="80%"></p>
-<p>2.3.2 Different Epoch</p>
-<p>This experiment group set epoch number as 25, learning rate as 0.0001, batch size as 16 and dataset parameters as 0.6 and 0.95. Following is the training process:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Experiment-Process">Experiment Process<a class="anchor-link" href="#Experiment-Process">&#182;</a></h2><p>This project consists of three files: load data.py, main.py, and VGG.py. The first method is for reading raw picture data into tensor. When it comes to training data, the RandomHorizontalFlip technique is utilized to horizontally flip training images. With the use of parameter traindata_size and valdata_size, load data.py separates training and validation data and makes the size controllable . Special methods are used in the design of load data.py to make the function more efficient. The parameter setting function, as well as the training and validation programs, are all included in main.py. To acquire the performance of the present model parameters, a validation set is implemented immediately after training. The model is saved as model.pt once each epoch is completed. VGG.py contains the neural network models VGG16 and VGG19, which I created myself.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Parameters-comparision">Parameters comparision<a class="anchor-link" href="#Parameters-comparision">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This section reports experiment result. There are six experiments in total, and in each of them, one parameter is modified. The first experiment group is the standard group, which can be regarded as the baseline.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Standard-Group">Standard Group<a class="anchor-link" href="#Standard-Group">&#182;</a></h4><p>This experiment group set epoch number as <strong>50</strong>, learning rate as <strong>0.0001</strong>, batch size as <strong>16</strong> and dataset parameters as <strong>0.6 and 0.95</strong>. Following is the training process:</p>
+<p><img src="pics/SG_1.png" width="80%">
+<img src="pics/SG_2.png" width="80%"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The loss value starts to drop from the beginning of training and stabilizes at the global step of 25k, as shown in the graphs above. After a while, accuracy hits around 0.97, and loss drops to approximately 0.2 to 0.4.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Different-Epoch">Different Epoch<a class="anchor-link" href="#Different-Epoch">&#182;</a></h4><p>This experiment group set epoch number as <strong>25</strong>, learning rate as <strong>0.0001</strong>, batch size as <strong>16</strong> and dataset parameters as <strong>0.6 and 0.95</strong>. Following is the training process:</p>
 <p><img src="pics/Epoch_1.png" width="80%">
 <img src="pics/Epoch_2.png" width="80%"></p>
-<p>2.3.3 Different Learning Rate</p>
-<p>This experiment group set epoch number as 50, learning rate as 0.001, batch size as 16 and dataset parameters as 0.6 and 0.95. Following is the training process:</p>
-<p><img src="pics/LR_1.png" width="80%">
-<img src="pics/LR_2.png" width="80%"></p>
-<p>2.3.4 Different Batch Size</p>
-<p>This experiment group set epoch number as 50, learning rate as 0.0001, batch size as 8 and dataset parameters as 0.6 and 0.95. Following is the training process:</p>
-<p><img src="pics/BS_1.png" width="80%">
-<img src="pics/BS_2.png" width="80%"></p>
-<p>2.3.5 SGD over Adam</p>
-<p>This experiment group set epoch number as 50, learning rate as 0.0001, batch size as 16 and dataset parameters as 0.6 and 0.95. However, the optimizer uses SGD rather than Adam. Following is the training process:</p>
-<p><img src="pics/SGD_1.png" width="80%">
-<img src="pics/SGD_2.png" width="80%"></p>
-<p>2.3.6 Different Training Batch Size</p>
-<p>This experiment group set epoch number as 50, learning rate as 0.0001, batch size as 16 and dataset parameters as 0.6 and 0.95. Following is the training process:</p>
-<p><img src="pics/Training_1.png" width="80%">
-<img src="pics/Training_2.png" width="80%"></p>
-<h2 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">&#182;</a></h2><p>本部分分析以上的结论</p>
 
 </div>
 </div>
@@ -13145,21 +13183,105 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1>
+<p>In comparison to the standard group, the preceding figures show that, while the loss value is nearly stable, accuracy is not. In the end, it hovers around 0.95, which is somewhat lower than the typical group's accuracy rate. Finally, sufficient training epoches are required to ensure that the neural network is properly trained and that its best performance is demonstrated.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Discussion">Discussion<a class="anchor-link" href="#Discussion">&#182;</a></h1>
+<h4 id="Different-Learning-Rate">Different Learning Rate<a class="anchor-link" href="#Different-Learning-Rate">&#182;</a></h4><p>This experiment group set epoch number as <strong>25</strong>, learning rate as <strong>0.001</strong>, batch size as <strong>16</strong> and dataset parameters as <strong>0.6 and 0.95</strong>. Following is the training process:</p>
+<p><img src="pics/LR_1.png" width="80%">
+<img src="pics/LR_2.png" width="80%"></p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h1><p>[1] MobileNet</p>
+<p>The learning rate is changed from 0.0001 to 0.001 in this experiment. When it comes to the loss graph, it's worth noting that the loss curve sways a lot during training. It fluctuates between 0.4 and 0.8 after 50 epoches of training, compared to 0.4 to 0.6 in the control group. This experiment group's accuracy (about 95%) is also lower than the standard group's (around 96 percent).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Different-Batch-Size">Different Batch Size<a class="anchor-link" href="#Different-Batch-Size">&#182;</a></h4><p>This experiment group set epoch number as <strong>50</strong>, learning rate as <strong>0.0001</strong>, batch size as <strong>8</strong> and dataset parameters as <strong>0.6 and 0.95</strong>. Following is the training process:</p>
+<p><img src="pics/BS_1.png" width="80%">
+<img src="pics/BS_2.png" width="80%"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Batch size is set to 8 instead of 16 in this experiment group. As a result, the worldwide step count has risen to 100,000. Meanwhile, it's worth noting that the training period will be longer and the loss curve appears to oscillate more than the standard group's.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Different-Optimizer">Different Optimizer<a class="anchor-link" href="#Different-Optimizer">&#182;</a></h4><p>This experiment group set epoch number as <strong>50</strong>, learning rate as <strong>0.0001</strong>, batch size as <strong>16</strong> and dataset parameters as <strong>0.6 and 0.95</strong>. This experiment group uses SGD optimizer rather than Adam. Following is the training process:</p>
+<p><img src="pics/SGD_1.png" width="80%">
+<img src="pics/SGD_2.png" width="80%"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This study group compares the effects of several optimizers on the training process. When compared to the Adam optimizer, the loss in SGD decays far more slowly. It only starts to decay at a global step of roughly 10k, owing to the fact that the SGD optimizer is more likely to fall into a local minimum. The accuracy curve follows a similar pattern. After the 13th global step, it only starts to increase. The accuracy eventually arrives at 90%, which is lower than the standard group. Adam is a superior Optimizer than SGD, according to the trial.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Different-Training-Batch-Size">Different Training Batch Size<a class="anchor-link" href="#Different-Training-Batch-Size">&#182;</a></h3><p>This experiment group set epoch number as <strong>50</strong>, learning rate as <strong>0.0001</strong>, batch size as <strong>16</strong> and dataset parameters as <strong>0.6 and 0.95</strong>. Following is the training process:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="pics/Training_1.png" width="80%">
+<img src="pics/Training_2.png" width="80%"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h2><p>The chart above shows how different hyperparameters affect the training process. Overall, epoch refers to the overall number of training iterations, and having a sufficient number of training iterations is crucial for excellent training accuracy. Because the learning rate determines how quickly the gradient lowers, a low learning rate usually results in a slower training process, whereas a high learning rate produces a lot of oscillation as the loss decreases. When it comes to batch size, a lower batch size lengthens the training process overall, but the end accuracy remains the same. The choice of optimizer, according to the preceding trials, is also crucial in achieving good training accuracy. Adam outperforms SGD significantly. The Adam technique can help the training process get to the fitting state faster and cross the local minimum value more effectively.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Conclusion-and-Discussion">Conclusion and Discussion<a class="anchor-link" href="#Conclusion-and-Discussion">&#182;</a></h1><p>This project uses MobileNet to classify driver images. Meanwhile, it investigates how hyperparameter settings affect the training process.
+According to the previous analysis, all five parameters have a direct influence on the training process, with the exception of batch size, which only influences the overall global step size and then the total training duration.</p>
+<p>Despite the foregoing findings, a deeper investigation into parameter tweaking is still required. Despite the fact that a lower learning rate means a lower oscillation, a low learning rate slows down the training process. The employment of a dynamic learning rate is a frequent solution to this problem. This approach starts with a high learning rate, but it gradually decreases after each epoch. Both the training time and the oscillation issue are balanced as a result. The batch size is in a similar scenario. If the training is done on GPU, a large batch size necessitates a large graphic memory, and if the dataset is too huge, it may become a problem. Another element that must be carefully studied is the epoch number. The neural network model may not be fully trained if the epoch number is too small. However, if it becomes too large, the additional training time will become unnecessary. Finally, selecting an optimizer is critical. As can be seen in the prior analysis, Adam is a newer and superior optimizer than SGD.</p>
+<p>In the furture, a more detailed comparision should be considered. For example, a test of whether the aforementioned dynamic learning rate method improves the overall training process in the sense of accuracy and training duation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h1><p>[1] Howard, A.G., Zhu, M., Chen, B., Kalenichenko, D., Wang, W., Weyand, T., Andreetto, M. and Adam, H., 2017. Mobilenets: Efficient convolutional neural networks for mobile vision applications. arXiv preprint arXiv:1704.04861.</p>
 
 </div>
 </div>
