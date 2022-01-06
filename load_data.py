@@ -26,7 +26,7 @@ class LoadDataset(data.Dataset):
         random.shuffle(imgs_in) # shuffle images
         imgs_num = len(imgs_in) # use special method __len__ to return the length of images.
 
-        # build transform using Compose method
+        # build transform (to transform the data to tensor) using Compose method
         if transforms is None and self.train: # for training
             self.transforms = T.Compose([T.RandomHorizontalFlip(), T.RandomResizedCrop(224), T.ToTensor()])
         else: # for validation
