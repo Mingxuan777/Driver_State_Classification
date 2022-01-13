@@ -36,3 +36,5 @@ To install, use the following code:
 '''
 pip install -r requirements.txt 
 '''
+
+## Report is located in ./Report file.
