@@ -1,6 +1,6 @@
-# CSC8635 Project
+# Project
 
-This repository contains CSC 8635 project.
+This repository contains a solution for Driver_State_Classification project.
 
 ## Basic setups
 ./logs contains files for tensorboard for visualizing training process.
